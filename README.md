@@ -39,3 +39,7 @@ Jenkins Pipeline Step by Step:
 - Jenkins can work directly with github by linking a repo directly ro jenkins and creating a new build to automate testing and automate the build by then selecting an post build action. 
 
 ![Jenkins Pipeline](images/jenkins_overview.PNG)
+
+## SSH 
+- Generate new key with the following command:
+- `ssh-keygen -t rsa -b 4096 -C "your-email"` 
