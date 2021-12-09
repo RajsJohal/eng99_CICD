@@ -43,3 +43,64 @@ Jenkins Pipeline Step by Step:
 ## SSH 
 - Generate new key with the following command:
 - `ssh-keygen -t rsa -b 4096 -C "your-email"` 
+
+## Git and Jenkins Task
+- Create a new repo with app folder
+- Generate new SSH key
+- Copy public key into the repo 
+- On Jenkins, build a new job 
+- provide github project url https
+![HTTPS URL](images/jenkins-gitlink.PNG)
+- Connection
+![Connector](images/jenkins_connection.PNG)
+- provide ssh github url address
+![SSH URL](images/jenkins_ssh.PNG)
+- Build Triggers set to GitHub hook trigger for GITScm polling
+- Build Environment
+![Build env and triggers](images/jenkins_build_trigger.PNG)
+- run commands
+- cd app
+- npm install
+- npm test
+- check homepage
+- check fibonacci value
+![Test Commands](images/jenkins_test_commands.PNG)
+- Jenkins test rests in a slave node, and the results are shown on the jenkins master node, the tests are run on an EC2 instance on AWS. 
+- Webhook, as soon as we push changes to the repo, the changes are immediatley pushed to jenkins and jenkins can build and test the changes and display the results. 
+- Webhook is created in GitHub, navigate to setting within the repo, webhook and create webhook link to jenkins.  
+
+## Task 1
+- Create another job yourname_ci_merge
+- create a new branch on localhost called dev
+- change main to dev in first job config 
+- make any changes in your README.md on local host and push to github
+- if test passes it should trigger next job 
+yourname_ci_merge
+- merge job should simply merge code from dev to main
+
+## Task 1 Completed
+- Install GitHub plugin in jenkins
+- Changed the branch specifier in first job to */dev and added post build action to run 2nd job.
+- Created 2nd job ci_merge with same configuration, however added additional behavior in source code management to merge before build:
+    - name of repo = origin
+    - branch to merge to = main
+    - merge strategy = default
+    - Fast-forward mode = --ff
+- Also added post build action to git push changes so they appear on github. 
+
+## Task 2
+- 3rd job CD/CDE should get code from main
+- deliver to AWS EC2 
+- ssh into machine 
+- cd app
+- npm install
+- npm start
+- final iteration fourth job to deploy and run app
+
+## Task 2 completed 
+- 3rd job is to build once 1st and 2nd jobs are completed
+- Build has same setup as before 
+- Build from main branch 
+- Build Environment uses SSH agent, eng99.pem key is required to login to EC2 instance
+- Execute shell command shoukd automate the ssh login, github repo copy, run the provision file and then npm install, and npm start. 
+![Shell](images/3rdjobshell.PNG)
