@@ -38,9 +38,9 @@ Jenkins Pipeline Step by Step:
 - When you run the first job it will automatically run the second right after and you can see the console output of both jobs.
 - Jenkins can work directly with github by linking a repo directly ro jenkins and creating a new build to automate testing and automate the build by then selecting an post build action. 
 
-![Jenkins Pipeline](images/jenkins_overview.PNG)
+![Jenkins Pipeline](images/CICD.png)
 
-## SSH 
+## SSH Key
 - Generate new key with the following command:
 - `ssh-keygen -t rsa -b 4096 -C "your-email"` 
 
@@ -102,5 +102,24 @@ yourname_ci_merge
 - Build has same setup as before 
 - Build from main branch 
 - Build Environment uses SSH agent, eng99.pem key is required to login to EC2 instance
-- Execute shell command shoukd automate the ssh login, github repo copy, run the provision file and then npm install, and npm start. 
+- Execute shell command to automate:
+    - the ssh login 
+    - github repo copy - rsync -avz = -i"eng99.pem" app ubuntu@<OWN-IP-ADDRESS>:/home/ubuntu
+    - run the provision file 
+    - npm install, and npm start
 ![Shell](images/3rdjobshell.PNG)
+
+## Set up of CI/CD Pipeline of App and DB 
+- How to start a pipeline for DB:  
+    - Create a new instance on AWS for DB and create security groups to link to Jenkins and the jenkins app instance. 
+    - Within jenkins, ssh into DB instance, download the db provisioning file to install mongodb, change the mongod.conf BindIP to 0.0.0.0 by using `cp` to copy a new mongod.conf file 
+    - App instance needs the env var `DB_Host="mongodb://DBEC2IP:27017/posts"`
+
+- 4 Projects total
+    - One for Test
+    - One for merge
+    - One to deploy DB
+    - Last to deploy app
+
+- 1 Blocker 
+    - Cant get posts to load, web page shows cannot GET /posts
