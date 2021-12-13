@@ -47,7 +47,9 @@ Jenkins Pipeline Step by Step:
 ## Git and Jenkins Task
 - Create a new repo with app folder
 - Generate new SSH key
-- Copy public key into the repo 
+- Copy public key into the repo
+- Create a WebHook on Github to link to Jenkins
+![Git WebHook](images/git_webhook.PNG)
 - On Jenkins, build a new job 
 - provide github project url https
 ![HTTPS URL](images/jenkins-gitlink.PNG)
