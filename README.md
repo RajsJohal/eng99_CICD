@@ -49,7 +49,7 @@ Jenkins Pipeline Step by Step:
 - Generate new SSH key
 - Copy public key into the repo
 - Create a WebHook on Github to link to Jenkins
-![Git WebHook](images/inkedgit_wbhook_LI.jpg)
+![Git WebHook](images/Inkedgit_webhook_LI.jpg)
 - On Jenkins, build a new job 
 - provide github project url https
 ![HTTPS URL](images/jenkins-gitlink.PNG)
